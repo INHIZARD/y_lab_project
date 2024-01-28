@@ -1,6 +1,14 @@
 package org.example.out.commands;
 
+/**
+ * Enum со всеми командами для меню пользователя.
+ * Используются в {@code MainView}
+ * @see org.example.out.views.MainView
+ */
 public enum ClientCommands {
+    /**
+     * Описание команд написано вместе с ними же, если нужно посмотреть подробно, смотрите {@code README.md}
+     */
     GET_INDICATIONS("""
             >indications
             Посмотреть показания всех счетчиков

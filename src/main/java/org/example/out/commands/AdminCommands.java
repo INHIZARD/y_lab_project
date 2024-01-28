@@ -1,6 +1,14 @@
 package org.example.out.commands;
 
+/**
+ * Enum со всеми командами для меню администратора.
+ * Используются в {@code MainView}
+ * @see org.example.out.views.MainView
+ */
 public enum AdminCommands {
+    /**
+     * Описание команд написано вместе с ними же, если нужно посмотреть подробно, смотрите {@code README.md}
+     */
     USERS("""
             >users
             Список всех пользователей

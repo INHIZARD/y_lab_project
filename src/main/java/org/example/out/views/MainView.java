@@ -1,5 +1,6 @@
 package org.example.out.views;
 
+import org.example.in.controllers.MainController;
 import org.example.in.models.Counters;
 import org.example.in.models.User;
 import org.example.out.commands.AdminCommands;
@@ -10,9 +11,17 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Класс реализующий отображение действий пользователя.
+ * Все отображения вызываются из класса {@code MainController}
+ * @see org.example.in.controllers.MainController
+ */
 public class MainView {
     private static final String LINE = "---------------------------------------";
 
+    /**
+     * Вывод всех счетчиков
+     */
     private static void indicationsOutput(Counters indications) {
         Map<String, Integer> indication = indications.getCounters();
         for (String title : indication.keySet()) {
@@ -20,24 +29,36 @@ public class MainView {
         }
     }
 
+    /**
+     * @see MainController#error() 
+     */
     public static void errorView() {
         System.out.println(LINE);
         System.out.println("Неверная команда!\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#usernameError() 
+     */
     public static void usernameErrorView() {
         System.out.println(LINE);
         System.out.println("Такое имя уже занято!\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#loginError() 
+     */
     public static void loginErrorView() {
         System.out.println(LINE);
         System.out.println("Неверные данные для входа!\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#login() 
+     */
     public static void loginView() {
         System.out.println(LINE);
         for (LoginCommands loginCommand : LoginCommands.values()) {
@@ -46,6 +67,9 @@ public class MainView {
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#clientHome() 
+     */
     public static void clientHomeView() {
         System.out.println(LINE);
         for (ClientCommands clientCommand : ClientCommands.values()) {
@@ -54,12 +78,18 @@ public class MainView {
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#indications(User) 
+     */
     public static void indicationsView(User user) {
         System.out.println(LINE);
         indicationsOutput(user.getIndications());
         System.out.print("\n>");
     }
 
+    /**
+     * @see MainController#submit(boolean) 
+     */
     public static void submitView(boolean isSaved) {
         System.out.println(LINE);
         if (isSaved) {
@@ -70,6 +100,9 @@ public class MainView {
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#history(User) 
+     */
     public static void historyView(User user) {
         System.out.println(LINE);
         Map<Calendar, Counters> indications = user.getSavedIndications();
@@ -89,6 +122,9 @@ public class MainView {
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#historyOfDate(Counters) 
+     */
     public static void historyOfDateView(Counters indication) {
         System.out.println(LINE);
         if (indication == null) {
@@ -99,12 +135,18 @@ public class MainView {
         System.out.print("\n>");
     }
 
+    /**
+     * @see MainController#inFuture(String) 
+     */
     public static void future(String date) {
         System.out.println(LINE);
         System.out.println("Новая текущая дата: " + date + "\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#adminHome() 
+     */
     public static void adminHomeView() {
         System.out.println(LINE);
         for (AdminCommands adminCommand : AdminCommands.values()) {
@@ -113,6 +155,9 @@ public class MainView {
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#allUsers(List) 
+     */
     public static void allUsersView(List<User> users) {
         System.out.println(LINE);
         int i = 1;
@@ -122,6 +167,9 @@ public class MainView {
         System.out.print("\n>");
     }
 
+    /**
+     * @see MainController#audit(User) 
+     */
     public static void auditView(User user) {
         System.out.println(LINE);
         for (String log : user.getAudit()) {
@@ -130,18 +178,27 @@ public class MainView {
         System.out.print("\n>");
     }
 
+    /**
+     * @see MainController#newIndication() 
+     */
     public static void newIndicationView() {
         System.out.println(LINE);
         System.out.println("Новый счетчик добавлен\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#newAdmin(boolean) 
+     */
     public static void newAdminView(boolean isNewAdmin) {
         System.out.println(LINE);
         System.out.println(isNewAdmin ? "Пользователь стал админом\n" : "Пользователь уже является админом\n");
         System.out.print(">");
     }
 
+    /**
+     * @see MainController#backAdmin(boolean) 
+     */
     public static void backAdminView(boolean isOldAdmin) {
         System.out.println(LINE);
         System.out.println(isOldAdmin ? "Пользователь потерял права админа\n"

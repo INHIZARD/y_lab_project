@@ -1,6 +1,14 @@
 package org.example.out.commands;
 
+/**
+ * Enum со всеми командами для меню логирования.
+ * Используются в {@code MainView}
+ * @see org.example.out.views.MainView
+ */
 public enum LoginCommands {
+    /**
+     * Описание команд написано вместе с ними же, если нужно посмотреть подробно, смотрите {@code README.md}
+     */
     LOGIN("""
             >login [username] [password]
             Вход в систему

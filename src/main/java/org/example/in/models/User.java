@@ -2,13 +2,23 @@ package org.example.in.models;
 
 import java.util.*;
 
+/**
+ * Класс реализующий пользователя
+ */
 public class User {
+    // Имя пользователя
     private String username;
+    // Пароль пользователя
     private String password;
+    // Статус пользователя (false - обычный пользователь, true - администратор)
     private boolean status;
+    // Показатели счетчиков пользователя
     private Counters indications;
+    // Дата последней подачи показаний пользователя
     private Calendar dateOfLastSubmit;
+    // Все поданные ранее показания
     private final Map<Calendar, Counters> savedIndications;
+    // Аудит пользователя
     private final List<String> audit;
 
     public User(String username, String password, Counters counters) {
@@ -69,6 +79,9 @@ public class User {
         return audit;
     }
 
+    /**
+     * Метод {@code equals} сравнивает пользователей только по {@code username}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
