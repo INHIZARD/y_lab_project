@@ -2,10 +2,12 @@ package org.example.out.views;
 
 import org.example.in.models.Counters;
 import org.example.in.models.User;
+import org.example.out.commands.AdminCommands;
 import org.example.out.commands.ClientCommands;
 import org.example.out.commands.LoginCommands;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 public class MainView {
@@ -100,6 +102,50 @@ public class MainView {
     public static void future(String date) {
         System.out.println(LINE);
         System.out.println("Новая текущая дата: " + date + "\n");
+        System.out.print(">");
+    }
+
+    public static void adminHomeView() {
+        System.out.println(LINE);
+        for (AdminCommands adminCommand : AdminCommands.values()) {
+            System.out.println(adminCommand.getCommand());
+        }
+        System.out.print(">");
+    }
+
+    public static void allUsersView(List<User> users) {
+        System.out.println(LINE);
+        int i = 1;
+        for (User user : users) {
+            System.out.println(i++ + ". " + user.getUsername());
+        }
+        System.out.print("\n>");
+    }
+
+    public static void auditView(User user) {
+        System.out.println(LINE);
+        for (String log : user.getAudit()) {
+            System.out.println(log);
+        }
+        System.out.print("\n>");
+    }
+
+    public static void newIndicationView() {
+        System.out.println(LINE);
+        System.out.println("Новый счетчик добавлен\n");
+        System.out.print(">");
+    }
+
+    public static void newAdminView(boolean isNewAdmin) {
+        System.out.println(LINE);
+        System.out.println(isNewAdmin ? "Пользователь стал админом\n" : "Пользователь уже является админом\n");
+        System.out.print(">");
+    }
+
+    public static void backAdminView(boolean isOldAdmin) {
+        System.out.println(LINE);
+        System.out.println(isOldAdmin ? "Пользователь потерял права админа\n"
+                : "Пользователь не имел прав админа или вы пытаетесь отобрать права у себя\n");
         System.out.print(">");
     }
 }

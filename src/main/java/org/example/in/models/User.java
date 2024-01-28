@@ -9,17 +9,16 @@ public class User {
     private Counters indications;
     private Calendar dateOfLastSubmit;
     private final Map<Calendar, Counters> savedIndications;
+    private final List<String> audit;
 
-    public User(String username, String password) {
+    public User(String username, String password, Counters counters) {
         this.username = username;
         this.password = password;
         this.status = false;
-        this.indications = new Counters(new HashMap<>(Map.of(
-                "Отопление", Math.abs(new Random().nextInt()) % 100,
-                "Холодная вода", Math.abs(new Random().nextInt()) % 100,
-                "Горячая вода", Math.abs(new Random().nextInt()) % 100)));
+        this.indications = new Counters(counters);
         this.dateOfLastSubmit = new GregorianCalendar(2000, Calendar.JANUARY, 1);
         this.savedIndications = new HashMap<>();
+        this.audit = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -64,6 +63,10 @@ public class User {
 
     public Map<Calendar, Counters> getSavedIndications() {
         return savedIndications;
+    }
+
+    public List<String> getAudit() {
+        return audit;
     }
 
     @Override

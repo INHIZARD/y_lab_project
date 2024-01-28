@@ -3,6 +3,7 @@ package org.example.in.controllers;
 import org.example.in.models.Counters;
 import org.example.in.models.User;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static org.example.out.views.MainView.*;
@@ -61,6 +62,36 @@ public class MainController {
 
     public String inFuture(String date) {
         future(date);
+        return scanner.nextLine();
+    }
+
+    public String adminHome() {
+        adminHomeView();
+        return scanner.nextLine();
+    }
+
+    public String allUsers(List<User> users) {
+        allUsersView(users);
+        return scanner.nextLine();
+    }
+
+    public String audit(User user) {
+        auditView(user);
+        return scanner.nextLine();
+    }
+
+    public String newIndication() {
+        newIndicationView();
+        return scanner.nextLine();
+    }
+
+    public String newAdmin(boolean isNewAdmin) {
+        newAdminView(isNewAdmin);
+        return scanner.nextLine();
+    }
+
+    public String backAdmin(boolean isOldAdmin) {
+        backAdminView(isOldAdmin);
         return scanner.nextLine();
     }
 }

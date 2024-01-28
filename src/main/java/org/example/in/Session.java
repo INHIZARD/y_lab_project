@@ -17,7 +17,7 @@ public class Session {
     public Session(Scanner scanner) {
         this.mainController = new MainController(scanner);
         this.mainService = new MainService();
-        User admin = new User("admin", "admin");
+        User admin = new User("admin", "admin", mainService.getIndications());
         admin.setStatus(true);
         this.users = new ArrayList<>(List.of(admin));
     }
@@ -33,13 +33,13 @@ public class Session {
         while (user == null) {
             if (Pattern.matches("login \\w* \\w*", command)) {
                 if (mainService.loginUser(command, users)) {
-                    user = mainService.getUser(command, users);
+                    user = mainService.getUserWithPassword(command, users);
                 } else {
                     command = mainController.loginError();
                 }
             } else if (Pattern.matches("signup \\w* \\w*", command)) {
                 if (mainService.signupUser(command, users)) {
-                    user = mainService.getUser(command, users);
+                    user = mainService.getUserWithPassword(command, users);
                 } else {
                     command = mainController.usernameError();
                 }
@@ -58,8 +58,10 @@ public class Session {
         }
 
         if (user.isStatus()) {
+            mainService.audit(user, command);
             adminHomeSession(user);
         } else {
+            mainService.audit(user, command);
             clientHomeSession(user);
         }
     }
@@ -68,6 +70,7 @@ public class Session {
         String command = mainController.clientHome();
         boolean logout = false;
         while (!logout) {
+            mainService.audit(user, command);
             if (Pattern.matches("indications", command)) {
                 command = mainController.indications(user);
             } else if (Pattern.matches("submit", command)) {
@@ -90,6 +93,33 @@ public class Session {
     }
 
     private void adminHomeSession(User user) {
+        String command = mainController.adminHome();
+        boolean logout = false;
+        while (!logout) {
+            mainService.audit(user, command);
+            if (Pattern.matches("users", command)) {
+                command = mainController.allUsers(users);
+            } else if (Pattern.matches("history \\w*", command)) {
+                command = mainController.history(mainService.getUserWithoutPassword(command, users));
+            } else if (Pattern.matches("audit \\w*", command)) {
+                command = mainController.audit(mainService.getUserWithoutPassword(command, users));
+            } else if (Pattern.matches("indication \\w*", command)) {
+                mainService.setIndication(command, users);
+                command = mainController.newIndication();
+            } else if (Pattern.matches("sadmin \\w*", command)) {
+                command = mainController.newAdmin(mainService.setAdmin(command, users));
+            } else if (Pattern.matches("dadmin \\w*", command)) {
+                command = mainController.backAdmin(mainService.deleteAdmin(command, users, user));
+            } else if (Pattern.matches("logout", command)) {
+                logout = true;
+            } else if (Pattern.matches("infuture \\d*", command)) {
+                command = mainController.inFuture(mainService.addTime(command, users));
+            } else if (Pattern.matches("help", command)) {
+                command = mainController.adminHome();
+            } else {
+                command = mainController.error();
+            }
+        }
         loginSession();
     }
 }
